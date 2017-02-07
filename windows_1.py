@@ -307,6 +307,11 @@ def Background():
 
         Z=m*x + b
         #print 'Z: ',len(Z)
+        minimo = min(Z)
+        for i in range(len(Z)):
+            if Z[i]<minimo:
+                Z[i]=minimo
+
         return Z
 
     n=int(pbBack.get())
