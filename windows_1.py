@@ -322,9 +322,11 @@ def Background():
             y[i]=0
         elif i>=len(y)-n:
             y[i]=0
-    minimo=min(y)
+
+    minimo=y[0]
+    print minimo
     for i in range(len(y)):
-        if y[i]<minimo:
+        if y[i]<=minimo:
             y[i]=minimo
 
     Plotar()
@@ -412,11 +414,11 @@ def Fourier():
 
 ##    menor=radians(menor)
 ##    maior=radians(maior)
-    menor=(menor)
-    maior=(maior)
+    menor=radians(menor/2)
+    maior=radians(maior/2)
 
     for i in range(len(armonico)):
-        armonico[i]=(i*lambida)/((sin(maior/2)-sin(menor/2))*2)
+        armonico[i]=(i*lambida)/((sin(maior)-sin(menor))*2)
 
     for i in range(len(armonico)):
         if armonico[i]<0:
@@ -434,7 +436,7 @@ def Fourier():
 
     plt.subplot(222)
     plt.grid()
-    plt.plot(armonico,AN, c='k')
+    plt.plot(armonico[0:30],AN[0:30], c='k')
     plt.xlabel('L(nm)')
     plt.ylabel("A(L)")
     plt.title("Amostra de ZnO - Fourier ")
@@ -457,7 +459,7 @@ def Fourier():
 
     plt.subplot(212)
     plt.grid()
-    plt.plot(armonico,AN,linestyle='--', marker='o')
+    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
     plt.plot(x, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
     plt.xlabel('L(nm)')
     plt.ylabel("A(L)")
