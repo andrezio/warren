@@ -19,7 +19,7 @@ import numpy as np
 from tkFileDialog   import askopenfilename
 import copy
 from lmfit.models import VoigtModel,PseudoVoigtModel, LinearModel
-from math import sin,cos,pi,radians,tan
+from math import sin,cos,pi,radians,tan,sqrt,log1p
 from scipy import stats
 
 root = Tk()
@@ -177,6 +177,15 @@ def Centralizar():
 
     Plotar()
 
+def radiation(key):
+    dic={"W - 0.0209(nm)":0.0209,
+"Mo - 0.0709(nm)":0.0709,	"Cu - 0.154(nm)":0.154,	"Ag - 0.0559(nm)":0.0559,\
+	"Ga - 0.134(nm)":0.134,	"In - 0.0512(nm)":0.0512
+    }
+
+    return dic[key]
+
+
 def SingleLine():
     plt.close()
     global x,y
@@ -223,9 +232,13 @@ def SingleLine():
     plt.plot(x,y)
     plt.title(str(str(comboBox.get())))
 
-    lambida=1.54
-    D=(1.54)/(out.best_values['sigma']*2*cos(out.best_values['center']/2))
-    E=2.35482*out.best_values['sigma']/(4*tan(out.best_values['center']/2))
+
+
+
+    lambida=radiation(comboBoxrad.get())
+
+    D=(lambida)/(  radians( out.best_values['sigma']*0.5*sqrt(pi/log1p(2))) *2*cos( radians( out.best_values['center']/2)))
+    E=2.35482*( radians( out.best_values['sigma']*pi/2 ))/(4*tan(radians( out.best_values['center']/2)))
 
     if E<0:
         E*=-1
@@ -408,7 +421,7 @@ def Fourier():
 
     AN=normalizar(AN)
 
-    lambida=1.54
+    lambida=radiation(comboBoxrad.get())
 
     print menor, maior, sin(menor),sin(maior)
 
@@ -481,16 +494,16 @@ def Fourier():
     y=y1
     plt.show()
 #############################################
-texto = Label(text='PLOTAR').place(x=10,y=5)
+texto = Label(text='PLOT').place(x=10,y=5)
 
 horizontal=0
 vertical=40
 
-btnPlotar = Button(root, text="PLOTAR", command = Plotar).place(x=horizontal,y=vertical)
+btnPlotar = Button(root, text="PLOT", command = Plotar).place(x=horizontal,y=vertical)
 vertical+=30
 btnResetar = Button(root, text="RESETAR", command = Resetar).place(x=horizontal,y=vertical)
 vertical+=30
-btnPlotar = Button(root, text="FECHAR", command = Fechar).place(x=horizontal,y=vertical)
+btnPlotar = Button(root, text="CLOSE", command = Fechar).place(x=horizontal,y=vertical)
 
 
 texto = Label(text='CORRECTION').place(x=120,y=5)
@@ -498,7 +511,7 @@ texto = Label(text='CORRECTION').place(x=120,y=5)
 horizontal=120
 vertical=40
 
-btnNormalizar = Button(root, text="NORMALIZAR", command = Normalizar).place(x=horizontal,y=vertical)
+btnNormalizar = Button(root, text="NORMALIZE", command = Normalizar).place(x=horizontal,y=vertical)
 vertical+=30
 ##################################polinomios
 p=9
@@ -524,26 +537,26 @@ pbB.insert(1,int(p))
 ##################################polinomios
 
 
-btnNormalizar = Button(root, text="SUAVIZAR", command = Suavizar).place(x=horizontal,y=vertical)
+btnNormalizar = Button(root, text="SMOOTH", command = Suavizar).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="CENTRALIZAR", command = Centralizar).place(x=horizontal,y=vertical)
+btnCentralizar = Button(root, text="CENTRALIZE", command = Centralizar).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="LORENTZPOLARIZATION",command = LorentxPolarization).place(x=horizontal,y=vertical)
+btnCentralizar = Button(root, text="LORENTZPOLARIZATION",state=DISABLED,command = LorentxPolarization).place(x=horizontal,y=vertical)
 vertical+=30
 btnCentralizar = Button(root, text="BACKGROUND",command = Background).place(x=horizontal,y=vertical)
 
 pback=20
 horizontal_2=210
-xc = Label(root, text = "Pol")
-xc.place(bordermode = OUTSIDE, height = 30, width = 30, x =horizontal_2,y=vertical )
-horizontal_2+=20
+xc = Label(root, text = "size")
+xc.place(bordermode = OUTSIDE, height = 30, width = 40, x =horizontal_2,y=vertical )
+horizontal_2+=30
 pbBack = Entry(root, textvariable = pback)
 pbBack.place(bordermode = OUTSIDE, height = 30, width = 40, x = horizontal_2, y =vertical )
 
 pbBack.delete(0,END)
 pbBack.insert(1,int(pback))
 
-texto = Label(text='ANALISE').place(x=360,y=5)
+texto = Label(text='ANALYSIS').place(x=360,y=5)
 
 horizontal=360
 vertical=40
@@ -618,6 +631,16 @@ xd.place(bordermode = OUTSIDE, height = 30, width = 30, x =70,y=ak )
 cC = Entry(root, textvariable = b)
 cC.place(bordermode = OUTSIDE, height = 30, width = 50, x = 100, y =ak )
 
+Labelradiation = Label(text = 'RADIATION').place(x=0,y=ak+40)
+
+comboBoxrad = Combobox(root, state="readonly", values=("W - 0.0209(nm)",    \
+"Mo - 0.0709(nm)",	"Cu - 0.154(nm)",	"Ag - 0.0559(nm)",	"Ga - 0.134(nm)",	"In - 0.0512(nm)"))
+
+
+comboBoxrad.grid()
+comboBoxrad.set("Cu - 0.154(nm)")
+comboBoxrad.place(x=70,y=ak+40)
+comboBoxrad.bind("<FocusIn>", defocus)
 
 ####################################
 #menu
