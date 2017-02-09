@@ -237,7 +237,18 @@ def SingleLine():
 
     lambida=radiation(comboBoxrad.get())
 
-    D=(lambida)/(  radians( out.best_values['sigma']*0.5*sqrt(pi/log1p(2))) *2*cos( radians( out.best_values['center']/2)))
+    #D=(lambida)/(  radians( out.best_values['sigma']*0.5*sqrt(pi/log1p(2))) *2*cos( radians( out.best_values['center']/2)))
+
+    center=out.best_values['center']/2
+    center=radians(center)
+
+    sigmaL=out.best_values['sigma']*2
+    sigmaL=radians(sigmaL)
+    sigmaL=sigmaL
+
+    D = lambida/(sigmaL*center)
+
+
     E=2.35482*( radians( out.best_values['sigma']*pi/2 ))/(4*tan(radians( out.best_values['center']/2)))
 
     if E<0:
