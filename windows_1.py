@@ -401,7 +401,10 @@ def Fourier():
 
     yy=[]
     for i in range(len(Nx)):
-        yy.append(y[i])
+        try:
+            yy.append(y[i])
+        except:
+            pass
 
 
     for i in range(len(yy)):
@@ -499,6 +502,10 @@ texto = Label(text='PLOT').place(x=10,y=5)
 horizontal=0
 vertical=40
 
+btnPlotar = Button(root, text="SAMPLE",command=Open_file).place(x=horizontal,y=vertical)
+vertical+=30
+btnPlotar = Button(root, text="INSTRUMENTAL").place(x=horizontal,y=vertical)
+vertical+=30
 btnPlotar = Button(root, text="PLOT", command = Plotar).place(x=horizontal,y=vertical)
 vertical+=30
 btnResetar = Button(root, text="RESETAR", command = Resetar).place(x=horizontal,y=vertical)
