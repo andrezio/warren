@@ -262,7 +262,7 @@ def LorentxPolarization():
     global x,y
 
     for i in range(len(y)):
-        y[i]/=(1+pow(cos(x[i]),2))/(cos(x[i])*pow(sin(x[i]),2))
+        y[i]/=(1+pow(cos(radians( x[i])),2))/(  cos( radians( x[i]))*pow(sin( radians( x[i])),2))
 
     Plotar()
 
@@ -541,7 +541,7 @@ btnNormalizar = Button(root, text="SMOOTH", command = Suavizar).place(x=horizont
 vertical+=30
 btnCentralizar = Button(root, text="CENTRALIZE", command = Centralizar).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="LORENTZPOLARIZATION",state=DISABLED,command = LorentxPolarization).place(x=horizontal,y=vertical)
+btnCentralizar = Button(root, text="LORENTZPOLARIZATION",state=NORMAL,command = LorentxPolarization).place(x=horizontal,y=vertical)
 vertical+=30
 btnCentralizar = Button(root, text="BACKGROUND",command = Background).place(x=horizontal,y=vertical)
 
