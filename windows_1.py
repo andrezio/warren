@@ -130,7 +130,7 @@ def Plotar():
         plt.title('Amostra')
         plt.xlabel('2Theta')
         plt.ylabel("Intensity")
-        plt.plot(x[mini:maxi],y[mini:maxi])
+        plt.plot(x[mini:maxi],y[mini:maxi],linestyle='-', marker='o')
         plt.grid()
         plt.show()
 
@@ -210,7 +210,7 @@ def SingleLine():
     plt.figure(1)
 
     plt.subplot(221)
-    plt.plot(x, y,label='original data')
+    plt.plot(x, y,label='original data',linestyle='-', marker='o')
     plt.title('Amostra')
     plt.xlabel('2Theta')
     plt.ylabel("Intensity")
@@ -220,7 +220,7 @@ def SingleLine():
     ##plt.plot(x, out.init_fit, 'k--',label='initial ')
 
     plt.subplot(222)
-    plt.plot(x, out.best_fit, 'r-',label='best fit')
+    plt.plot(x, out.best_fit, 'r-',label='best fit',linestyle='-', marker='o')
     plt.title('Amostra')
     plt.xlabel('2Theta')
     plt.ylabel("Intensity")
@@ -229,7 +229,7 @@ def SingleLine():
 
     plt.subplot(212)
 
-    plt.plot(x,y)
+    plt.plot(x,y,linestyle='-', marker='o')
     plt.title(str(str(comboBox.get())))
 
 
@@ -264,7 +264,7 @@ def SingleLine():
 
     plt.xlabel('2Theta')
     plt.ylabel("Intensity")
-    plt.plot(x, out.best_fit, 'r-',label='center: '+str(out.best_values['center'])+'\nSigma: '+ str(out.best_values['sigma']))
+    plt.plot(x, out.best_fit, 'r-',label='center: '+str(out.best_values['center'])+'\nSigma: '+ str(out.best_values['sigma']),linestyle='-', marker='o')
     plt.legend()
     plt.grid()
     plt.show()
@@ -459,11 +459,11 @@ def Fourier():
     plt.xlabel('position (2theta)')
     plt.ylabel("Intensity")
     plt.title("Amostra de ZnO")
-    plt.plot(x,y)
+    plt.plot(x,y,linestyle='-', marker='o')
 
     plt.subplot(222)
     plt.grid()
-    plt.plot(armonico[0:30],AN[0:30], c='k')
+    plt.plot(armonico[0:30],AN[0:30], c='k',linestyle='-', marker='o')
     plt.xlabel('L(nm)')
     plt.ylabel("A(L)")
     plt.title("Amostra de ZnO - Fourier ")
