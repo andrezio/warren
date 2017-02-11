@@ -242,9 +242,9 @@ def SingleLine():
     center=out.best_values['center']/2
     center=radians(center)
 
-    sigmaL=out.best_values['sigma']*2
+    sigmaL=out.best_values['sigma']*3.6013100
     sigmaL=radians(sigmaL)
-    sigmaL=sigmaL
+
 
     D = lambida/(sigmaL*center)
 
