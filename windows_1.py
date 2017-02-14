@@ -241,6 +241,7 @@ def SingleLine():
 
     center=out.best_values['center']/2
     center=radians(center)
+    center=cos(center)
 
     sigmaL=out.best_values['sigma']*3.6013100
     sigmaL=radians(sigmaL)
