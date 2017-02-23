@@ -13,7 +13,7 @@ from ttk import *
 import sys
 import tkMessageBox
 from tkFileDialog   import askopenfilename
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt2
 from math import sin, cos
 import numpy as np
 from tkFileDialog   import askopenfilename
@@ -22,11 +22,11 @@ from lmfit.models import VoigtModel,PseudoVoigtModel, LinearModel
 from math import sin,cos,pi,radians,tan,sqrt,log1p
 from scipy import stats
 
-
+p2 = Tk()
 positionstandart=-1
 dicstandart={}
 
-root = Tk()
+
 
 
 #STANDART
@@ -134,7 +134,7 @@ def cristalmat():
 
 def close_window ():
     Fechar()
-    root.destroy()
+    p2.destroy()
 
 def stOpen_file():
     global xs,ys,x0s,y0s,namefile
@@ -159,7 +159,7 @@ def stOpen_file():
     sbB.insert(1,xs[0])
 
 def Fechar():
-    plt.close()
+    plt2.close()
 
 def stPlotar():
 
@@ -170,13 +170,13 @@ def stPlotar():
     mini,maxi=stgetminmax()
     try:
         diciostandart()
-        plt.cla()
-        plt.title('Amostra')
-        plt.xlabel('2Theta')
-        plt.ylabel("Intensity")
-        plt.plot(xs[mini:maxi],ys[mini:maxi],linestyle='-', marker='o')
-        plt.grid()
-        plt.show()
+        plt2.cla()
+        plt2.title('Amostra')
+        plt2.xlabel('2Theta')
+        plt2.ylabel("Intensity")
+        plt2.plot(xs[mini:maxi],ys[mini:maxi],linestyle='-', marker='o')
+        plt2.grid()
+        plt2.show()
 
     except:
         print 'vazio'
@@ -190,13 +190,13 @@ def stPlotarBack():
     mini,maxi=stgetminmax()
     try:
 
-        plt.cla()
-        plt.title('Amostra')
-        plt.xlabel('2Theta')
-        plt.ylabel("Intensity")
-        plt.plot(xs[mini:maxi],ys[mini:maxi],linestyle='-', marker='o')
-        plt.grid()
-        plt.show()
+        plt2.cla()
+        plt2.title('Amostra')
+        plt2.xlabel('2Theta')
+        plt2.ylabel("Intensity")
+        plt2.plot(xs[mini:maxi],ys[mini:maxi],linestyle='-', marker='o')
+        plt2.grid()
+        plt2.show()
 
     except:
         print 'vazio'
@@ -330,46 +330,61 @@ def stdoublekalpha():
 
     stPlotar()
 
+def stDownload():
+    global xs,ys
+    mini,maxi=stgetminmax()
+    xs=xs[mini:maxi]
+    ys=ys[mini:maxi]
+    orig_stdout = sys.stdout
+    f = open('out.txt', 'w')
+    sys.stdout = f
+
+    for i in range(len(xs)):
+        print xs[i], str(';'),ys[i]
+    sys.stdout = orig_stdout
+    f.close()
+
 #############################################
-texto = Label(text='STANDART').place(x=5,y=5)
+texto = Label(p2,text='STANDART').place(x=5,y=5)
 
 horizontal=0
 vertical=40
 
 
-btnPlotar = Button(root, text="STANDART",command = stOpen_file).place(x=horizontal,y=vertical)
+btnPlotar = Button(p2, text="STANDART",command = stOpen_file).place(x=horizontal,y=vertical)
 vertical+=30
-btnPlotar = Button(root, text="PLOT", command = stPlotar).place(x=horizontal,y=vertical)
+btnPlotar = Button(p2, text="PLOT", command = stPlotar).place(x=horizontal,y=vertical)
 vertical+=30
-btnResetar = Button(root, text="RESETAR", command = stResetar).place(x=horizontal,y=vertical)
+btnResetar = Button(p2, text="RESETAR", command = stResetar).place(x=horizontal,y=vertical)
 vertical+=30
-btnPlotar = Button(root, text="CLOSE", command = Fechar).place(x=horizontal,y=vertical)
+btnPlotar = Button(p2, text="CLOSE", command = Fechar).place(x=horizontal,y=vertical)
 vertical+=30
-btnPlotar = Button(root, text="BACK",command=returnvaluesstandart).place(x=horizontal,y=vertical)
+btnPlotar = Button(p2, text="BACK",command=returnvaluesstandart).place(x=horizontal,y=vertical)
+vertical+=30
+btnPlotar = Button(p2, text="DOWNLOAD",command=stDownload).place(x=horizontal,y=vertical)
 
-
-texto = Label(text='CORRECTION').place(x=120,y=5)
+texto = Label(p2,text='CORRECTION').place(x=120,y=5)
 
 horizontal=120
 vertical=40
 
-btnNormalizar = Button(root, text="NORMALIZE", command = stNormalizar).place(x=horizontal,y=vertical)
+btnNormalizar = Button(p2, text="NORMALIZE", command = stNormalizar).place(x=horizontal,y=vertical)
 vertical+=30
 ##################################polinomios
 sp=9
 sw=11
 horizontal_2=200
 
-sxc = Label(root, text = "Pol")
+sxc = Label(p2, text = "Pol")
 sxc.place(bordermode = OUTSIDE, height = 30, width = 30, x =horizontal_2,y=vertical )
 horizontal_2+=20
-spbB = Entry(root, textvariable = sp)
+spbB = Entry(p2, textvariable = sp)
 spbB.place(bordermode = OUTSIDE, height = 30, width = 40, x = horizontal_2, y =vertical )
 horizontal_2+=40
-sxd = Label(root, text = "Win")
+sxd = Label(p2, text = "Win")
 sxd.place(bordermode = OUTSIDE, height = 30, width = 30, x =horizontal_2,y=vertical )
 horizontal_2+=30
-swcC = Entry(root, textvariable = sw)
+swcC = Entry(p2, textvariable = sw)
 swcC.place(bordermode = OUTSIDE, height = 30, width = 40, x = horizontal_2, y =vertical )
 
 swcC.delete(0,END)
@@ -379,48 +394,48 @@ spbB.insert(1,int(sp))
 ##################################polinomios
 
 
-btnNormalizar = Button(root, text="SMOOTH", command = stSuavizar).place(x=horizontal,y=vertical)
+btnNormalizar = Button(p2, text="SMOOTH", command = stSuavizar).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="CENTRALIZE", command = stCentralizar).place(x=horizontal,y=vertical)
+btnCentralizar = Button(p2, text="CENTRALIZE", command = stCentralizar).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="LORENTZPOLARIZATION",state=NORMAL,command = stLorentxPolarization).place(x=horizontal,y=vertical)
+btnCentralizar = Button(p2, text="LORENTZPOLARIZATION",state=NORMAL,command = stLorentxPolarization).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="DOUBLETOKALPHA",state=NORMAL,command = stdoublekalpha).place(x=horizontal,y=vertical)
+btnCentralizar = Button(p2, text="DOUBLETOKALPHA",state=NORMAL,command = stdoublekalpha).place(x=horizontal,y=vertical)
 vertical+=30
-btnCentralizar = Button(root, text="BACKGROUND",command = stBackground).place(x=horizontal,y=vertical)
+btnCentralizar = Button(p2, text="BACKGROUND",command = stBackground).place(x=horizontal,y=vertical)
 
 spback=10
 horizontal_2=210
-sxc = Label(root, text = "size")
+sxc = Label(p2, text = "size")
 sxc.place(bordermode = OUTSIDE, height = 30, width = 40, x =horizontal_2,y=vertical )
 horizontal_2+=30
-spbBack = Entry(root, textvariable = spback)
+spbBack = Entry(p2, textvariable = spback)
 spbBack.place(bordermode = OUTSIDE, height = 30, width = 40, x = horizontal_2, y =vertical )
 
 spbBack.delete(0,END)
 spbBack.insert(1,int(spback))
 
 
-ak=240
-texto = Label(text='POSITION').place(x=50,y=ak-30)
+ak=260
+texto = Label(p2,text='POSITION').place(x=50,y=ak-30)
 sa=int
 sb=int
-sxc = Label(root, text = "Min")
+sxc = Label(p2, text = "Min")
 sxc.place(bordermode = OUTSIDE, height = 30, width = 30, x =0,y=ak )
 
-sbB = Entry(root, textvariable = sa)
+sbB = Entry(p2, textvariable = sa)
 sbB.place(bordermode = OUTSIDE, height = 30, width = 40, x = 30, y =ak )
 
-sxd = Label(root, text = "Max")
+sxd = Label(p2, text = "Max")
 sxd.place(bordermode = OUTSIDE, height = 30, width = 30, x =70,y=ak )
 
-scC = Entry(root, textvariable = sb)
+scC = Entry(p2, textvariable = sb)
 scC.place(bordermode = OUTSIDE, height = 30, width = 50, x = 100, y =ak )
 #########################################
 ###################################
 
 #janela----
 
-root.title("Cristal Mat - IPEN")
-root.geometry("650x330+10+10")
-root.mainloop()
+p2.title("Cristal Mat - IPEN")
+p2.geometry("650x330+10+10")
+p2.mainloop()
