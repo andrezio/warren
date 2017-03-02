@@ -1081,21 +1081,27 @@ def SingleLineDouble():
     plt.close()
     global x,y,xs,ys
     mini,maxi=getminmax()
-    mini,maxi=sgetminmax()
-
-    x=x[mini:maxi]
-    y=y[mini:maxi]
-    sx=sx[mini:maxi]
-    sy=sy[mini:maxi]
-
+    mini,maxi=stgetminmax()
 
     if str(comboBox.get())=='VoigtModel':
         mod = VoigtModel()
     elif str(comboBox.get())=='PseudoVoigtModel':
         mod = PseudoVoigtModel()
 
+    x=x[mini:maxi]
+    y=y[mini:maxi]
+
     pars = mod.guess(y, x=x)
     out  = mod.fit(y, pars, x=x)
+
+    xs=xs[mini:maxi]
+    ys=ys[mini:maxi]
+
+    pars1 = mod.guess(ys, x=xs)
+    out1  = mod.fit(ys, pars1, x=xs)
+
+
+
 
 
 
@@ -1104,7 +1110,8 @@ def SingleLineDouble():
     plt.figure(1)
 
     plt.subplot(221)
-    plt.plot(x, y,label='original data',linestyle='-', marker='o')
+    plt.plot(x, y,label='sample data',linestyle='-', marker='o')
+    plt.plot(xs, ys,label='standart data',linestyle='-', marker='o')
     plt.title('Amostra')
     plt.xlabel('2Theta')
     plt.ylabel("Intensity")
@@ -1114,8 +1121,9 @@ def SingleLineDouble():
     ##plt.plot(x, out.init_fit, 'k--',label='initial ')
 
     plt.subplot(222)
-    plt.plot(x, out.best_fit, 'r-',label='best fit',linestyle='-', marker='o')
-    plt.title('Amostra')
+    plt.plot(x, out.best_fit, 'r-',label='best sample fit',linestyle='-', marker='o')
+    plt.plot(xs, out1.best_fit, 'r-',label='best standart fit',linestyle='-', marker='o')
+    plt.title('FIT')
     plt.xlabel('2Theta')
     plt.ylabel("Intensity")
     plt.grid()
@@ -1124,6 +1132,7 @@ def SingleLineDouble():
     plt.subplot(212)
 
     plt.plot(x,y,linestyle='-', marker='o')
+    plt.plot(xs,ys,linestyle='-', marker='o')
     plt.title(str(str(comboBox.get())))
 
 
@@ -1133,18 +1142,26 @@ def SingleLineDouble():
 
     #D=(lambida)/(  radians( out.best_values['sigma']*0.5*sqrt(pi/log1p(2))) *2*cos( radians( out.best_values['center']/2)))
 
-    center=out.best_values['center']/2
+    #center=out.best_values['center']/2
+    #print out.best_values['center'] , out1.best_values['center']
+    center=(out.best_values['center'] + out1.best_values['center'] )/2
+    #print center
+    center = center /2
+
     center=radians(center)
+
     center=cos(center)
 
-    sigmaL=out.best_values['sigma']*3.6013100
+    sigmaL=(out.best_values['sigma']-out1.best_values['sigma'] )*3.6013100
+
     sigmaL=radians(sigmaL)
 
+    #print center, sigmaL
 
     D = lambida/(sigmaL*center)
 
 
-    E=2.35482*( radians( out.best_values['sigma']*pi/2 ))/(4*tan(radians( out.best_values['center']/2)))
+    E=2.35482*( radians( (out.best_values['sigma']-out1.best_values['sigma'] )*pi/2 ))/(4*tan(radians( (out.best_values['sigma']-out1.best_values['sigma'] )/2)))
 
     if E<0:
         E*=-1
@@ -1352,7 +1369,7 @@ texto = Label(p3,text='ANALYSIS SAMPLE').place(x=horizontal,y=5)
 vertical=40
 
 
-btnSingleLine = Button(p3,  text="SINGLE LINE", command = SingleLineDouble).place(x=horizontal,y=vertical)
+btnSingleLine = Button(p3,  text="SINGLE LINE", command = SingleLine).place(x=horizontal,y=vertical)
 #,state = DISABLED
 vertical+=30
 btnFourier = Button(p3,  text="FOURIER", command=Fourier).place(x=horizontal,y=vertical)
@@ -1395,7 +1412,7 @@ texto = Label(p3,text='ANALYSIS SAMPLE AND STANDART').place(x=horizontal,y=5)
 vertical=40
 
 
-btnSingleLine = Button(p3,  text="SINGLE LINE", command = SingleLine).place(x=horizontal,y=vertical)
+btnSingleLine = Button(p3,  text="SINGLE LINE", command = SingleLineDouble).place(x=horizontal,y=vertical)
 #,state = DISABLED
 vertical+=30
 btnFourier = Button(p3,  text="FOURIER", command=Fourier).place(x=horizontal,y=vertical)
