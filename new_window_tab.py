@@ -83,17 +83,18 @@ def returnvaluessample():
 
 def Download():
     global x,y
-    mini,maxi=tgetminmax()
+    mini,maxi=getminmax()
     x=x[mini:maxi]
     y=y[mini:maxi]
     orig_stdout = sys.stdout
-    f = open('outsample.txt', 'w')
+    f = open('outsample.xy', 'w')
     sys.stdout = f
 
     for i in range(len(x)):
-        print x[i], str(';'),y[i]
+        print x[i], str(' '),y[i]
     sys.stdout = orig_stdout
     f.close()
+    print 'salvou dados'
 
 def removekalpha():
     pass
@@ -514,7 +515,135 @@ def Background():
     Plotar()
 
 def FourierDouble():
-    pass
+    plt.close()
+    global x,y,xs,ys
+    mini,maxi=getminmax()
+    mini,maxi=stgetminmax()
+
+    x=x[mini:maxi]
+    y=y[mini:maxi]
+
+    xs=xs[mini:maxi]
+    ys=ys[mini:maxi]
+
+    AN,armonico=calc_Fourier(x,y)
+    ANST,armonicoST=calc_Fourier(xs,ys)
+
+
+    plt.figure(1)
+
+    plt.subplot(221)
+    plt.grid()
+    plt.xlabel('position (2theta)')
+    plt.ylabel("Intensity")
+    plt.title("Amostra de ZnO")
+    plt.plot(armonicoST[0:30],ANST[0:30],linestyle='-', marker='o')
+
+    plt.subplot(222)
+    plt.grid()
+    plt.plot(armonico[0:30],AN[0:30], c='k',linestyle='-', marker='o')
+    plt.xlabel('L(nm)')
+    plt.ylabel("A(L)")
+    plt.title("Amostra de ZnO - Fourier ")
+
+
+    plt.subplot(212)
+    plt.grid()
+    newAN=[]
+    newarmonico=[]
+    for i in range(len(AN)):
+        newarmonico.append(armonico[i])
+        newAN.append(AN[i]/ANST[i])
+
+    plt.plot(newarmonico[0:30],newAN[0:30], c='k',linestyle='-', marker='o')
+    plt.xlabel('L(nm)')
+    plt.ylabel("A(L)")
+    plt.title("Amostra de ZnO - Fourier ")
+
+    plt.show()
+
+def calc_Fourier(x,y):
+    armonico=[] #numeros armonicos
+    AN=[] # real
+
+
+
+    tamanho=len(y)
+
+    def list(vetor):
+            newvetor = []
+            for i in vetor:
+                newvetor.append(i)
+
+            return newvetor
+
+    x=list(x)
+    y=list(y)
+
+    a=[]
+    for i in range(0,21):
+        a.append(0)
+
+    Nx=[]
+    for i in range(-1*y.index(max(y)),y.index(max(y))):
+        Nx.append(i)
+
+    primeiro=0
+    maior=0
+    menor=0
+    for i in x:
+
+        if primeiro ==0:
+            if not i==0:
+                menor=i
+                primeiro=1
+
+        if primeiro ==1:
+            if i==0:
+                primeiro=2
+            if primeiro==1:
+                maior=i
+
+
+    yy=[]
+    for i in range(len(Nx)):
+        try:
+            yy.append(y[i])
+        except:
+            pass
+
+
+    for i in range(len(yy)):
+        #armonico.append(i)
+        soma=0
+
+        for j in range(len(yy)-1):
+            soma = soma+yy[j]*cos(2*pi*i*Nx[j]/tamanho)
+
+
+        if soma <=0:
+            pass
+        else:
+            AN.append(soma/tamanho)
+            armonico.append(i)
+
+
+    #AN=normalizar(AN)
+
+    lambida=radiation(comboBoxrad.get())
+
+
+    menor=radians(menor/2)
+    maior=radians(maior/2)
+
+    for i in range(len(armonico)):
+        armonico[i]=(i*lambida)/((sin(maior)-sin(menor))*2)
+
+    for i in range(len(armonico)):
+        if armonico[i]<0:
+            armonico[i]*=-1
+
+    return AN,armonico
 
 
 def Fourier():
@@ -598,10 +727,7 @@ def Fourier():
 
     lambida=radiation(comboBoxrad.get())
 
-    print menor, maior, sin(menor),sin(maior)
 
-##    menor=radians(menor)
-##    maior=radians(maior)
     menor=radians(menor/2)
     maior=radians(maior/2)
 
@@ -901,13 +1027,14 @@ def stDownload():
     xs=xs[mini:maxi]
     ys=ys[mini:maxi]
     orig_stdout = sys.stdout
-    f = open('out.txt', 'w')
+    f = open('outstandart.xy', 'w')
     sys.stdout = f
 
     for i in range(len(xs)):
-        print xs[i], str(';'),ys[i]
+        print xs[i], str(' '),ys[i]
     sys.stdout = orig_stdout
     f.close()
+    print 'Salvou standar'
 
 
 def stPlotar():
