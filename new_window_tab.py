@@ -513,6 +513,9 @@ def Background():
 
     Plotar()
 
+def FourierDouble():
+    pass
+
 
 def Fourier():
     plt.close()
@@ -668,9 +671,12 @@ def Fourier():
 ##############
 
 nb = Pmw.NoteBook(root)
-p1 = nb.add('SAMPLE')
-p2 = nb.add('STANDART')
-p3 = nb.add('ANALYSIS')
+p1 = nb.add('SAMPLE 1')
+p2 = nb.add('STANDART 1')
+p1_1 = nb.add('SAMPLE 2')
+p2_2 = nb.add('STANDART 2')
+p3 = nb.add('ANALYSIS ONE PEAKE')
+p4 = nb.add('WARREN AVERBACK')
 
 nb.pack(padx=5, pady=5, fill=BOTH, expand=1)
 
@@ -1415,7 +1421,7 @@ vertical=40
 btnSingleLine = Button(p3,  text="SINGLE LINE", command = SingleLineDouble).place(x=horizontal,y=vertical)
 #,state = DISABLED
 vertical+=30
-btnFourier = Button(p3,  text="FOURIER", command=Fourier).place(x=horizontal,y=vertical)
+btnFourier = Button(p3,  text="FOURIER", command=FourierDouble).place(x=horizontal,y=vertical)
 
 btnFLognormal = Button(p3,  text="LOG-NORMAL").place(x=horizontal,y=vertical+30)
 #########################################
