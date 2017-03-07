@@ -58,7 +58,7 @@ def returnvaluessample():
     x=copy.copy(  dicsample[positionsampl]['x'])
     y=copy.copy(  dicsample[positionsampl]['y'])
     PlotarBack()
-#STANDART
+#STANDARD
 ##def diciostandart():
 ##
 ##    global x,y,positionstandart,dicstandart
@@ -520,6 +520,9 @@ def FourierDouble():
     mini,maxi=getminmax()
     mini,maxi=stgetminmax()
 
+    x1=copy.copy(xs)
+    y1=copy.copy(ys)
+
     x=x[mini:maxi]
     y=y[mini:maxi]
 
@@ -547,25 +550,18 @@ def FourierDouble():
     plt.title("Amostra de ZnO - Fourier ")
 
 
-    plt.subplot(212)
-    plt.grid()
     newAN=[]
     newarmonico=[]
     for i in range(len(AN)):
         newarmonico.append(armonico[i])
         newAN.append(AN[i]/ANST[i])
 
-    plt.plot(newarmonico[0:30],newAN[0:30], c='k',linestyle='-', marker='o')
-    plt.xlabel('L(nm)')
-    plt.ylabel("A(L)")
-    plt.title("Amostra de ZnO - Fourier ")
-
     ############################
     inicio=int(boxFmin.get())
     fim=int(boxFmax.get())
 
-    y=AN[inicio:fim]
-    x=armonico[inicio:fim]
+    y=newAN[inicio:fim]
+    x=newarmonico[inicio:fim]
 
     mod = LinearModel()
 
@@ -577,68 +573,79 @@ def FourierDouble():
     slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
 
 
-    plt.subplot(212)
-    plt.grid()
-    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
-    plt.plot(x, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
-    plt.xlabel('L(nm)')
-    plt.ylabel("A(L)")
-    plt.title("Amostra de ZnO - Fourier ")
-    plt.legend()
+##    plt.subplot(212)
+##    plt.grid()
+##    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
+##    plt.plot(x, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
+##    plt.xlabel('L(nm)')
+##    plt.ylabel("A(L)")
+##    plt.title("Amostra de ZnO - Fourier ")
+##    plt.legend()
 
     # Create a list of values in the best fit line
-    abline_values = [slope * i + intercept for i in armonico]
+    abline_values = [slope * i + intercept for i in newarmonico]
 
     lx=[]
     ly=[]
     for i in range(len(abline_values)):
         if abline_values[i]>=0:
-            lx.append(armonico[i])
+            lx.append(newarmonico[i])
             ly.append(abline_values[i])
 
-    plt.plot(lx,ly, 'red')
+
     x=x1
     y=y1
 
-    ######################
-    inicio=int(boxFminst.get())
-    fim=int(boxFmaxst.get())
-
-    ys=AN[inicio:fim]
-    xs=armonico[inicio:fim]
-
-    mod = LinearModel()
-
-    pars = mod.guess(ys, x=xs)
-    out  = mod.fit(ys, pars, x=xs)
-    XS=out.values['intercept']/out.values['slope']*-1
-
-
-    slope, intercept, r_value, p_value, std_err = stats.linregress(xs,ys)
-
-
     plt.subplot(212)
+
     plt.grid()
-    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
-    plt.plot(xs, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
+
+
+    plt.plot(newarmonico[0:30],newAN[0:30], c='k',linestyle='-', marker='o',label='$L_A(nm)$: '+str("%.4f"%XS))
+    plt.plot(lx,ly, 'red')
     plt.xlabel('L(nm)')
     plt.ylabel("A(L)")
-    plt.title("Amostra de ZnO - Fourier ")
     plt.legend()
+    plt.title("Amostra de ZnO - Fourier ")
+    ######################
+##    inicio=int(boxFminst.get())
+##    fim=int(boxFmaxst.get())
+##
+##    y=AN[inicio:fim]
+##    x=armonico[inicio:fim]
+##
+##    mod = LinearModel()
+##
+##    pars = mod.guess(y, x=x)
+##    out  = mod.fit(y, pars, x=x)
+##    XS=out.values['intercept']/out.values['slope']*-1
+##
+##
+##    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
 
-    # Create a list of values in the best fit line
-    abline_values = [slope * i + intercept for i in armonico]
 
-    lx=[]
-    ly=[]
-    for i in range(len(abline_values)):
-        if abline_values[i]>=0:
-            lx.append(armonico[i])
-            ly.append(abline_values[i])
+##    plt.subplot(212)
+##    plt.grid()
+##    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
+##    plt.plot(x, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
+##    plt.xlabel('L(nm)')
+##    plt.ylabel("A(L)")
+##    plt.title("Amostra de ZnO - Fourier ")
+##    plt.legend()
 
-    plt.plot(lx,ly, 'red')
-    xs=x1s
-    ys=y1s
+##    # Create a list of values in the best fit line
+##    abline_values = [slope * i + intercept for i in armonico]
+##
+##    lx=[]
+##    ly=[]
+##    for i in range(len(abline_values)):
+##        if abline_values[i]>=0:
+##            lx.append(armonico[i])
+##            ly.append(abline_values[i])
+##
+##    plt.plot(lx,ly, 'red')
+##    xs=x1
+##    ys=y1
 
     ########################
     plt.show()
@@ -879,9 +886,9 @@ def Fourier():
 
 nb = Pmw.NoteBook(root)
 p1 = nb.add('SAMPLE 1')
-p2 = nb.add('STANDART 1')
+p2 = nb.add('STANDARD 1')
 p1_1 = nb.add('SAMPLE 2')
-p2_2 = nb.add('STANDART 2')
+p2_2 = nb.add('STANDARD 2')
 p3 = nb.add('ANALYSIS ONE PEAKE')
 p4 = nb.add('WARREN AVERBACK')
 
@@ -983,7 +990,7 @@ dicstandart={}
 
 
 
-#STANDART
+#STANDARD
 def stLorentxPolarization():
     global xs,ys
 
@@ -1484,13 +1491,13 @@ def Background():
     Plotar()
 
 
-texto = Label(p2,text='STANDART').place(x=5,y=5)
+texto = Label(p2,text='STANDARD').place(x=5,y=5)
 
 horizontal=0
 vertical=40
 
 
-btnPlotar = Button(p2, text="STANDART",command = stOpen_file).place(x=horizontal,y=vertical)
+btnPlotar = Button(p2, text="STANDARD",command = stOpen_file).place(x=horizontal,y=vertical)
 vertical+=30
 btnPlotar = Button(p2, text="PLOT", command = stPlotar).place(x=horizontal,y=vertical)
 vertical+=30
@@ -1620,7 +1627,7 @@ boxFmax.insert(1,int(Fmax))
 #########################################
 ########################
 horizontal=350
-texto = Label(p3,text='ANALYSIS SAMPLE AND STANDART').place(x=horizontal,y=5)
+texto = Label(p3,text='ANALYSIS SAMPLE AND STANDARD').place(x=horizontal,y=5)
 
 
 vertical=40
