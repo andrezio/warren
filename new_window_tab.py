@@ -560,6 +560,87 @@ def FourierDouble():
     plt.ylabel("A(L)")
     plt.title("Amostra de ZnO - Fourier ")
 
+    ############################
+    inicio=int(boxFmin.get())
+    fim=int(boxFmax.get())
+
+    y=AN[inicio:fim]
+    x=armonico[inicio:fim]
+
+    mod = LinearModel()
+
+    pars = mod.guess(y, x=x)
+    out  = mod.fit(y, pars, x=x)
+    XS=out.values['intercept']/out.values['slope']*-1
+
+
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
+
+
+    plt.subplot(212)
+    plt.grid()
+    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
+    plt.plot(x, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
+    plt.xlabel('L(nm)')
+    plt.ylabel("A(L)")
+    plt.title("Amostra de ZnO - Fourier ")
+    plt.legend()
+
+    # Create a list of values in the best fit line
+    abline_values = [slope * i + intercept for i in armonico]
+
+    lx=[]
+    ly=[]
+    for i in range(len(abline_values)):
+        if abline_values[i]>=0:
+            lx.append(armonico[i])
+            ly.append(abline_values[i])
+
+    plt.plot(lx,ly, 'red')
+    x=x1
+    y=y1
+
+    ######################
+    inicio=int(boxFminst.get())
+    fim=int(boxFmaxst.get())
+
+    ys=AN[inicio:fim]
+    xs=armonico[inicio:fim]
+
+    mod = LinearModel()
+
+    pars = mod.guess(ys, x=xs)
+    out  = mod.fit(ys, pars, x=xs)
+    XS=out.values['intercept']/out.values['slope']*-1
+
+
+    slope, intercept, r_value, p_value, std_err = stats.linregress(xs,ys)
+
+
+    plt.subplot(212)
+    plt.grid()
+    plt.plot(armonico[0:30],AN[0:30],linestyle='--', marker='o')
+    plt.plot(xs, out.best_fit, 'r-', label='$L_A(nm)$: '+str("%.4f"%XS))
+    plt.xlabel('L(nm)')
+    plt.ylabel("A(L)")
+    plt.title("Amostra de ZnO - Fourier ")
+    plt.legend()
+
+    # Create a list of values in the best fit line
+    abline_values = [slope * i + intercept for i in armonico]
+
+    lx=[]
+    ly=[]
+    for i in range(len(abline_values)):
+        if abline_values[i]>=0:
+            lx.append(armonico[i])
+            ly.append(abline_values[i])
+
+    plt.plot(lx,ly, 'red')
+    xs=x1s
+    ys=y1s
+
+    ########################
     plt.show()
 
 def calc_Fourier(x,y):
@@ -1555,29 +1636,29 @@ btnFLognormal = Button(p3,  text="LOG-NORMAL").place(x=horizontal,y=vertical+30)
 ak=vertical
 ##Fmin=int
 ##Fmax=int
-Fmin=1
-Fmax=5
+Fmin=0
+Fmax=4
 
 xc = Label(p3, text = "Min")
 beta=horizontal+80
 xc.place(bordermode = OUTSIDE, height = 30, width = 30, x =beta,y=ak )
 beta+=30
 
-boxFmin = Entry(p3, textvariable = Fmin)
-boxFmin.place(bordermode = OUTSIDE, height = 30, width = 40, x = beta, y =ak )
+boxFminst = Entry(p3, textvariable = Fmin)
+boxFminst.place(bordermode = OUTSIDE, height = 30, width = 40, x = beta, y =ak )
 beta+=40
 
 xd = Label(p3, text = "Max")
 xd.place(bordermode = OUTSIDE, height = 30, width = 30, x =beta,y=ak )
 beta+=30
 
-boxFmax = Entry(p3, textvariable = Fmax)
-boxFmax.place(bordermode = OUTSIDE, height = 30, width = 50, x = beta, y =ak )
+boxFmaxst = Entry(p3, textvariable = Fmax)
+boxFmaxst.place(bordermode = OUTSIDE, height = 30, width = 50, x = beta, y =ak )
 
-boxFmin.delete(0,END)
-boxFmax.delete(0,END)
-boxFmin.insert(1,int(Fmin))
-boxFmax.insert(1,int(Fmax))
+boxFminst.delete(0,END)
+boxFmaxst.delete(0,END)
+boxFminst.insert(1,int(Fmin))
+boxFmaxst.insert(1,int(Fmax))
 
 
 #,state = DISABLED
