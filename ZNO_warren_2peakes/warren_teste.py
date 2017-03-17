@@ -16,7 +16,6 @@ from math import sin,cos,pi,radians,tan,sqrt,log1p
 namefile=['outsample101.xy','outstandart101.xy','outsample202.xy','outstandart202.xy']
 
 
-
 def calc_Fourier(x,y):
     armonico=[] #numeros armonicos
     AN=[] # real
@@ -71,20 +70,7 @@ def calc_Fourier(x,y):
             armonico.append(i)
 
 
-    #AN=normalizar(AN)
 
-    lambida=1.54
-
-
-##    menor=radians(menor/2)
-##    maior=radians(maior/2)
-##
-##    for i in range(len(armonico)):
-##        armonico[i]=(i*lambida)/((sin(maior)-sin(menor))*2)
-##
-##    for i in range(len(armonico)):
-##        if armonico[i]<0:
-##            armonico[i]*=-1
 
     return AN,armonico
 
@@ -187,28 +173,41 @@ x,y = np.loadtxt(namefile[0], unpack= True) #sample 101
 x1,y1 = np.loadtxt(namefile[1], unpack= True) #standart 101
 X,Y=bertho(x,y,x1,y1)
 Y=normalizar(Y[0:15])
-X=newxvetor(X,1)
+
 
 
 x2,y2 = np.loadtxt(namefile[2], unpack= True)
 x3,y3 = np.loadtxt(namefile[3], unpack= True)
 X1,Y1=bertho(x2,y2,x3,y3)
 Y1=normalizar(Y1[0:15])
+
+
+
 X1=newxvetor(X1,2)
+X=newxvetor(X,1)
 
 
-for i in range(len(X[0:10])):
-    x=[X[i],X1[i]]
-    y=[Y[i],Y1[i]]
 
-    coeficiente=abs((Y1[i]-Y[i])/(X1[i]-X[i]))
+def plotar():
+    for i in range(len(X[0:12])):
+        try:
+            x=[X[i],X1[i]]
+            y=[Y[i],Y1[i]]
 
-    print 'alpha '+ str(i) + ' '  + str(coeficiente)
+            coeficiente=abs((Y1[i]-Y[i])/(X1[i]-X[i]))
 
-    plt.plot(x,y,linestyle='-', marker='o')
+            print 'alpha '+ str(i) + ' '  + str(coeficiente)
+
+            plt.plot(x,y,linestyle='-', marker='o')
+        except:
+            pass
+
+plotar()
+plt.axis([0.5,2.5,0,1.2])
 
 ##plt.plot(X1[0:15],Y1[0:15],linestyle='-', marker='o')
 ##plt.plot(X[0:15],Y[0:15],linestyle='-', marker='o')
+
 plt.show()
 
 
