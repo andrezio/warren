@@ -1,0 +1,126 @@
+###############################################################################
+# Maslen, E.N.;Strel'tsov, V.A.;Ishizawa, N. (1996)
+# Acta Crystallographica B (39,1983-) 52, 414-422
+# A synchrotron X-ray study of the electron density in C-type rare eart\
+#h oxides
+# 
+# CIF by ICSD-for-WWW,  Copyright 2003 FIZ-Karlsruhe & A.W.Hewat (hewat@ill.fr)
+# NOT TO BE PUBLISHED IN ANY FORM. See http://icsd.ill.fr/icsd/conditions.html
+###############################################################################
+
+data_82420-ICSD
+_database_code_ICSD                82420
+_audit_creation_date               1997-11-10
+_chemical_name_systematic
+'Yttrium oxide'
+_chemical_formula_structural       
+'Y2 O3'
+_chemical_formula_sum              
+'O3 Y2'
+_publ_section_title                
+'O3 Y2'
+loop_
+_citation_id
+_citation_journal_abbrev
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Acta Crystallographica B (39,1983-)' 1996 52 414 422 ASBSDK
+loop_
+_publ_author_name
+Maslen, E.N.;Strel'tsov, V.A.;Ishizawa, N.
+_cell_length_a                     10.5981(7)
+_cell_length_b                     10.5981(7)
+_cell_length_c                     10.5981(7)
+_cell_angle_alpha                  90.
+_cell_angle_beta                   90.
+_cell_angle_gamma                  90.
+_cell_volume                       1190.38
+_cell_formula_units_Z              16
+_symmetry_space_group_name_H-M     'I a -3'
+_symmetry_Int_Tables_number        206
+_refine_ls_R_factor_all            0.067000
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+ 1 'x,y,z'
+ 2 '1/2+x,1/2+y,1/2+z'
+ 3 'x,-y,1/2-z'
+ 4 '1/2+x,1/2-y,-z'
+ 5 'x,1/2-y,1/2+z'
+ 6 '1/2+x,-y,z'
+ 7 '-y,1/2-z,x'
+ 8 '1/2-y,-z,1/2+x'
+ 9 '-y,z,1/2+x'
+ 10 '1/2-y,1/2+z,x'
+ 11 '-z,1/2+x,1/2-y'
+ 12 '1/2-z,x,-y'
+ 13 '-z,x,1/2+y'
+ 14 '1/2-z,1/2+x,y'
+ 15 'z,1/2+x,-y'
+ 16 '1/2+z,x,1/2-y'
+ 17 'z,x,y'
+ 18 '1/2+z,1/2+x,1/2+y'
+ 19 'y,1/2-z,1/2+x'
+ 20 '1/2+y,-z,x'
+ 21 'y,z,x'
+ 22 '1/2+y,1/2+z,1/2+x'
+ 23 'x,1/2+y,-z'
+ 24 '1/2+x,y,1/2-z'
+ 25 '-x,-y,-z'
+ 26 '1/2-x,1/2-y,1/2-z'
+ 27 '-x,y,1/2+z'
+ 28 '1/2-x,1/2+y,z'
+ 29 '-x,1/2+y,1/2-z'
+ 30 '1/2-x,y,-z'
+ 31 'y,1/2+z,-x'
+ 32 '1/2+y,z,1/2-x'
+ 33 'y,-z,1/2-x'
+ 34 '1/2+y,1/2-z,-x'
+ 35 'z,1/2-x,1/2+y'
+ 36 '1/2+z,-x,y'
+ 37 'z,-x,1/2-y'
+ 38 '1/2+z,1/2-x,-y'
+ 39 '-z,1/2-x,y'
+ 40 '1/2-z,-x,1/2+y'
+ 41 '-z,-x,-y'
+ 42 '1/2-z,1/2-x,1/2-y'
+ 43 '-y,1/2+z,1/2-x'
+ 44 '1/2-y,z,-x'
+ 45 '-y,-z,-x'
+ 46 '1/2-y,1/2-z,1/2-x'
+ 47 '-x,1/2-y,z'
+ 48 '1/2-x,-y,1/2+z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Y3+     3.
+O2-     -2.
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Y1 Y3+ 8 b 0.25 0.25 0.25 0. 1.
+Y2 Y3+ 24 d 0.96764(3) 0 0.25 0. 1.
+O1 O2- 48 e 0.3907(2) 0.1518(2) 0.3801(2) 0. 1.
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_type_symbol
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Y1 Y3+ 0.0032(1) 0.0032(1) 0.0032(1) 0.00056(7) 0.00056(7) 0.00056(7)
+Y2 Y3+ 0.0027(1) 0.0027(1) 0.0027(1) 0 0 -.00026(6)
+O1 O2- 0.0051(5) 0.0053(5) 0.0041(5) -.0003(4) -.0006(4) -.0005(4)
+#End of data_82420-ICSD
